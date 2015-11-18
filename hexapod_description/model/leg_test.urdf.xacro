@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="leg_test">
+
+  <xacro:include filename="$(find hexapod_description)/model/leg.urdf.xacro"/>
+
+  <link name="base_link"/>
+
+  <joint name="test_leg_base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="test_leg_base_link"/>
+  </joint>
+
+  <xacro:leg name="test"/>
+
+</robot>
