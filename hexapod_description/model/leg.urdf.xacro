@@ -9,6 +9,9 @@
   <xacro:property name="AX12_m" value="0.05"/>
   <xacro:property name="LINKAGE_m" value="0.02"/>
 
+  <xacro:include filename="$(find hexapod_description)/model/leg.gazebo.xacro"/>
+  <xacro:include filename="$(find hexapod_description)/model/leg.transmission.xacro"/>
+
 
   <xacro:macro name="leg" params="name">
 
@@ -213,6 +216,9 @@
       </inertial>
 
     </link>
+
+    <xacro:hexapod_leg_gazebo name="${name}"/>
+    <xacro:hexapod_leg_transmission name="${name}"/>
 
   </xacro:macro>
 
