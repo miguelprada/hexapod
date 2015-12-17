@@ -27,6 +27,29 @@
       </geometry>
     </visual>
 
+    <collision>
+      <origin xyz="0 0.0145 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://hexapod_description/meshes/F51.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+
+    <collision>
+      <origin xyz="0 0.0145 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://hexapod_description/meshes/F52.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.04"/>
+      <inertia
+        ixx="1.0" ixy="0.0" ixz="0.0"
+        iyy="1.0" iyz="0.0"
+        izz="1.0"/>
+    </inertial>
+
   </link>
 
   <!-- Front Left leg -->
@@ -60,7 +83,7 @@
   <joint name="rr_leg_base_joint" type="fixed">
     <parent link="base_link"/>
     <child link="rr_leg_base_link"/>
-    <origin xyz="-0.024 -0.0385 0" rpy="0 0 ${-pi/2}"/>
+    <origin xyz="-0.024 -0.0385 0" rpy="0 0 ${- pi/2}"/>
   </joint>
 
   <xacro:leg name="rr"/>
