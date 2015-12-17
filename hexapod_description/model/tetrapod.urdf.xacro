@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="tetrapod">
+
+  <xacro:include filename="$(find hexapod_description)/model/leg.urdf.xacro"/>
+
+  <link name="base_link"/>
+
+  <joint name="base_torso_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="torso"/>
+  </joint>
+
+  <link name="torso">
+
+    <visual>
+      <origin xyz="0 0.0145 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://hexapod_description/meshes/F51.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+
+    <visual>
+      <origin xyz="0 0.0145 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://hexapod_description/meshes/F52.dae" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </visual>
+
+  </link>
+
+  <!-- Front Left leg -->
+  <joint name="fl_leg_base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="fl_leg_base_link"/>    
+    <origin xyz="0.024 0.0385 0" rpy="0 0 ${pi/2}"/>
+  </joint>
+
+  <xacro:leg name="fl"/>
+
+  <!-- Front Right leg -->
+  <joint name="fr_leg_base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="fr_leg_base_link"/>
+    <origin xyz="0.024 -0.0385 0" rpy="0 0 ${-pi/2}"/>
+  </joint>
+
+  <xacro:leg name="fr"/>
+
+  <!-- Rear Left leg -->
+  <joint name="rl_leg_base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="rl_leg_base_link"/>
+    <origin xyz="-0.024 0.0385 0" rpy="0 0 ${pi/2}"/>
+  </joint>
+
+  <xacro:leg name="rl"/>
+
+  <!-- Rear Right leg -->
+  <joint name="rr_leg_base_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="rr_leg_base_link"/>
+    <origin xyz="-0.024 -0.0385 0" rpy="0 0 ${-pi/2}"/>
+  </joint>
+
+  <xacro:leg name="rr"/>
+
+</robot>
