@@ -35,13 +35,7 @@ class Logger:
 
 
 
-logger = None
-
-
-
-def make_temp_dir( prefix ):
-
-    global logger
+def make_temp_dir( logger, prefix ):
 
     try:
         os.mkdir( prefix )
@@ -51,7 +45,7 @@ def make_temp_dir( prefix ):
 
 
 
-def generate_scad( data, name, temp_prefix ):
+def generate_scad( logger, data, name, temp_prefix ):
 
     scad_filename = '{0}/body_{1}.scad'.format( temp_prefix, name )
 
@@ -78,7 +72,7 @@ def generate_scad( data, name, temp_prefix ):
 
 
 
-def generate_ascii_stl( data, name, temp_prefix, scad_filename ):
+def generate_ascii_stl( logger, name, temp_prefix, scad_filename ):
 
     ascii_stl_filename = '{0}/body_{1}.stl'.format( temp_prefix, name )
 
@@ -96,7 +90,7 @@ def generate_ascii_stl( data, name, temp_prefix, scad_filename ):
 
 
 
-def convert_ascii_to_binary_stl( data, name, temp_prefix, ascii_stl_filename ):
+def convert_ascii_to_binary_stl( logger, ascii_stl_filename ):
 
     binary_stl_filename = '-binary.'.join( ascii_stl_filename.split('.') )
 
@@ -112,7 +106,7 @@ def convert_ascii_to_binary_stl( data, name, temp_prefix, ascii_stl_filename ):
 
 
 
-def generate_urdf( data, name, temp_prefix, binary_stl_filename ):
+def generate_urdf( logger, name, temp_prefix, binary_stl_filename ):
 
     urdf_filename = '{0}/body_{1}.urdf'.format( temp_prefix, name )
 
@@ -131,7 +125,7 @@ def generate_urdf( data, name, temp_prefix, binary_stl_filename ):
 
 
 
-def visualize_in_rviz( data, name, temp_prefix, urdf_filename ):
+def visualize_in_rviz( logger, urdf_filename ):
 
     display_command = [ 'roslaunch', 'urdf_tutorial', 'display.launch', 'model:={0}'.format( urdf_filename ) ]
 
@@ -141,34 +135,36 @@ def visualize_in_rviz( data, name, temp_prefix, urdf_filename ):
 
 
 
-def process_dimension_set( data, name, temp_prefix, visualize ):
+def process_dimension_set( logger, data, name, temp_prefix, visualize ):
 
     logger.info( '------------------------------------------------------' )
     logger.info( 'Processing dimension set: {0}'.format( name ) )
     
-    scad_filename = generate_scad( data, name, temp_prefix )  
+    scad_filename = generate_scad( logger, data, name, temp_prefix )  
 
-    ascii_stl_filename = generate_ascii_stl( data, name, temp_prefix, scad_filename )
+    ascii_stl_filename = generate_ascii_stl( logger, name, temp_prefix, scad_filename )
 
-    binary_stl_filename = convert_ascii_to_binary_stl( data, name, temp_prefix, ascii_stl_filename )
+    binary_stl_filename = convert_ascii_to_binary_stl( logger, ascii_stl_filename )
 
-    urdf_filename = generate_urdf( data, name, temp_prefix, binary_stl_filename )
+    urdf_filename = generate_urdf( logger, name, temp_prefix, binary_stl_filename )
 
     if visualize:
 
-        visualize_in_rviz( data, name, temp_prefix, urdf_filename )
+        visualize_in_rviz( logger, urdf_filename )
 
 
 
-def main( datafile, outdir, display ):
+def main( datafile, outdir, verbose, display ):
 
-    make_temp_dir( outdir )
+    logger = Logger( print_debug = args.verbose )
+
+    make_temp_dir( logger, outdir )
 
     data = yaml.load( open( datafile ) )
 
     for name in data:
 
-        process_dimension_set( data, name, outdir, display )
+        process_dimension_set( logger, data, name, outdir, display )
   
 
 
@@ -183,7 +179,4 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    global logger
-    logger = Logger( print_debug = args.verbose )
-
-    main( args.data_file, args.outdir, args.display )
+    main( args.data_file, args.outdir, args.verbose, args.display )
