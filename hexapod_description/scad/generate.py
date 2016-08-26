@@ -11,6 +11,8 @@ TEMP_PREFIX = '/tmp/hxpd'
 
 DO_DEBUG = True
 
+VISUALIZE = False
+
 def INFO(text):
     print( '\033[92m{0}\033[0m'.format(text) )
 
@@ -40,8 +42,11 @@ for name in DATA:
                                '-D', 'PI_L={0}'.format(DATA[name]['pi_l']),
                                '-D', 'PI_W={0}'.format(DATA[name]['pi_w']),
                                '-D', 'B_L={0}'.format(DATA[name]['b_l']),
+                               '-D', 'B_LP={0}'.format(DATA[name]['b_lp']),
                                '-D', 'B_W={0}'.format(DATA[name]['b_w']),
                                '-D', 'B_WP={0}'.format(DATA[name]['b_wp']),
+                               '-D', 'PI_HR={0}'.format(DATA[name]['pi_hr']),
+                               '-D', 'S_HR={0}'.format(DATA[name]['s_hr']),
                                '-D', 'H={0}'.format(DATA[name]['h']),
                                'body.cog.scad' ]
 
@@ -93,8 +98,10 @@ for name in DATA:
 
 
 
-    display_command = [ 'roslaunch', 'urdf_tutorial', 'display.launch', 'model:={0}'.format( urdf_filename ) ]
+    if VISUALIZE:
 
-    DEBUG( 'Running: {0}'.format( display_command ) )
+        display_command = [ 'roslaunch', 'urdf_tutorial', 'display.launch', 'model:={0}'.format( urdf_filename ) ]
 
-    subprocess.call( display_command )
+        DEBUG( 'Running: {0}'.format( display_command ) )
+
+        subprocess.call( display_command )
