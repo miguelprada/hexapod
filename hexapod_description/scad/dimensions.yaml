@@ -1,0 +1,14 @@
+wide:
+  pi_l: 85
+  pi_w: 56
+  b_l: 34
+  b_w: 34
+  b_wp: 10
+  h: 5
+short:
+  pi_l: 85
+  pi_w: 56
+  b_l: 34
+  b_w: 34
+  b_wp: 10
+  h: 5
