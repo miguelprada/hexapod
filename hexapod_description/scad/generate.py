@@ -5,16 +5,10 @@ import os
 
 import yaml
 
+import argparse
 
 
-DATA = yaml.load(open('dimensions.yaml'))
-
-TEMP_PREFIX = '/tmp/hxpd'
-
-DO_DEBUG = True
-
-VISUALIZE = True
-
+DEFAULT_OUTFILE = '/tmp/hxpd'
 
 
 class Logger:
@@ -41,7 +35,7 @@ class Logger:
 
 
 
-logger = Logger( print_debug = DO_DEBUG )
+logger = None
 
 
 
@@ -166,15 +160,30 @@ def process_dimension_set( data, name, temp_prefix, visualize ):
 
 
 
-def main():
+def main( datafile, outdir, display ):
 
-    make_temp_dir( TEMP_PREFIX )
+    make_temp_dir( outdir )
 
-    for name in DATA:
+    data = yaml.load( open( datafile ) )
 
-        process_dimension_set( DATA, name, TEMP_PREFIX, VISUALIZE )
+    for name in data:
+
+        process_dimension_set( data, name, outdir, display )
   
+
 
 if __name__ == '__main__':
 
-    main()
+    parser = argparse.ArgumentParser( description='Generate scad, stl and URDF files for hexapod body reading dimensions from a YAML file', formatter_class=argparse.ArgumentDefaultsHelpFormatter )
+
+    parser.add_argument( 'data_file', help='YAML file with the dimensions data' )
+    parser.add_argument( '-o', '--outdir', nargs='?', default=DEFAULT_OUTFILE, help='Folder to store the generated files' )
+    parser.add_argument( '-v', '--verbose', action='store_true', help='Increase script verbosity' )
+    parser.add_argument( '-d', '--display', action='store_true', help='Display result of generated files in rviz' )
+
+    args = parser.parse_args()
+
+    global logger
+    logger = Logger( print_debug = args.verbose )
+
+    main( args.data_file, args.outdir, args.display )
