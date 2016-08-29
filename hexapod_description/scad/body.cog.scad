@@ -50,7 +50,8 @@ module servo_holes()
   cog.outl( 'Bw  = {0};'.format( B_W ) )
   cog.outl( 'Bwp = {0};'.format( B_WP ) )
   cog.outl()
-  cog.outl( 'Shr  = {0};'.format( S_HR ) )
+  cog.outl( 'Din = {0};'.format( D_IN ) )
+  cog.outl( 'Shr = {0};'.format( S_HR ) )
   cog.outl()
 
   ]]]*/
@@ -74,7 +75,7 @@ module servo_holes()
   u_12 = v_12 / norm_12;
   n_12 = [ u_12[1], -u_12[0] ];
 
-  p_in_12  = p_inp_12 + 4 * n_12;
+  p_in_12  = p_inp_12 + Din * n_12;
 
   s_h_1 = p_in_12 - 8 * u_12;
   s_h_2 = p_in_12 + 8 * u_12;
@@ -88,7 +89,7 @@ module servo_holes()
   u_34 = v_34 / norm_34;
   n_34 = [ u_34[1], -u_34[0] ];
 
-  p_in_34  = p_inp_34 + 4 * n_34;
+  p_in_34  = p_inp_34 + Din * n_34;
 
   s_h_3 = p_in_34 - 8 * u_34;
   s_h_4 = p_in_34 + 8 * u_34;
@@ -102,7 +103,7 @@ module servo_holes()
   u_56 = v_56 / norm_56;
   n_56 = [ u_56[1], -u_56[0] ];
 
-  p_in_56  = p_inp_56 + 4 * n_56;
+  p_in_56  = p_inp_56 + Din * n_56;
 
   s_h_5 = p_in_56 - 8 * u_56;
   s_h_6 = p_in_56 + 8 * u_56;
@@ -116,7 +117,7 @@ module servo_holes()
   u_78 = v_78 / norm_78;
   n_78 = [ u_78[1], -u_78[0] ];
 
-  p_in_78  = p_inp_78 + 4 * n_78;
+  p_in_78  = p_inp_78 + Din * n_78;
 
   s_h_7 = p_in_78 - 8 * u_78;
   s_h_8 = p_in_78 + 8 * u_78;
