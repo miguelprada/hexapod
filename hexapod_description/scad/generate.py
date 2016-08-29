@@ -237,7 +237,7 @@ def process_dimension_set( logger, data, name, temp_prefix, visualize ):
 
 
 
-def main( datafile, outdir, verbose, display ):
+def main( datafile, outdir, verbose, display, names ):
 
     logger = Logger( print_debug = args.verbose>=1, print_ddebug = args.verbose>=2 )
 
@@ -246,6 +246,9 @@ def main( datafile, outdir, verbose, display ):
     data = yaml.load( open( datafile ) )
 
     for name in data:
+
+        if names and (name not in names):
+            continue
 
         process_dimension_set( logger, data, name, outdir, display )
   
@@ -259,7 +262,8 @@ if __name__ == '__main__':
     parser.add_argument( '-o', '--outdir', nargs='?', default=DEFAULT_OUTFILE, help='Folder to store the generated files' )
     parser.add_argument( '-v', '--verbose', action='count', help='Increase script verbosity' )
     parser.add_argument( '-d', '--display', action='store_true', help='Display result of generated files in rviz' )
+    parser.add_argument( '-n', '--name', action='append', help='Name of the dimension sets to generate' )
 
     args = parser.parse_args()
 
-    main( args.data_file, args.outdir, args.verbose, args.display )
+    main( args.data_file, args.outdir, args.verbose, args.display, args.name )
