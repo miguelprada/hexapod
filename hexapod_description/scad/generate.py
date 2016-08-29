@@ -210,7 +210,7 @@ def generate_urdf( logger, data, name, temp_prefix, binary_stl_filename ):
 
 def visualize_in_rviz( logger, urdf_filename ):
 
-    display_command = [ 'roslaunch', 'urdf_tutorial', 'display.launch', 'model:={0}'.format( urdf_filename ) ]
+    display_command = [ 'roslaunch', 'hexapod_description', 'gen_xacrodisplay.launch', 'model:={0}'.format( urdf_filename ) ]
 
     logger.debug( 'Running: {0}'.format( display_command ) )
 
