@@ -23,6 +23,9 @@
         ]]]-->
         <!--[[[end]]]-->
       </geometry>
+      <material name="gray">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
     </visual>
 
     <visual>
@@ -40,6 +43,9 @@
         ]]]-->
         <!--[[[end]]]-->
       </geometry>
+      <material name="gray">
+        <color rgba="0.7 0.7 0.7 1"/>
+      </material>
     </visual>
 
     <collision>
