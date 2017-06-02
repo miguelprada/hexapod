@@ -26,9 +26,9 @@
       </visual>
 
       <collision>
-        <origin xyz="0.036 0 0" rpy="0 0 ${-pi/2}"/>
+        <origin xyz="0.0225 0 0" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://hexapod_description/meshes/AX12.dae" scale="0.001 0.001 0.001"/>
+          <box size="0.05 0.026 0.032"/>
         </geometry>
       </collision>
 
@@ -36,9 +36,9 @@
         <origin xyz="-0.0135 0 0" rpy="0 0 0"/>
         <mass value="${AX12_m}"/>
         <inertia
-          ixx="1.0" ixy="0.0" ixz="0.0"
-          iyy="1.0" iyz="0.0"
-          izz="1.0"/>
+          ixx="1.0e-6" ixy="0.0" ixz="0.0"
+          iyy="1.0e-6" iyz="0.0"
+          izz="1.0e-6"/>
       </inertial>
 
     </link>
@@ -68,17 +68,47 @@
         </geometry>
       </visual>
 
+      <!-- F2 simplified -->
       <collision>
-        <origin xyz="0 0 0" rpy="0 ${pi/2} 0"/>
+        <origin xyz="0.013 0 0.0225" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://hexapod_description/meshes/F2.dae" scale="0.001 0.001 0.001"/>
+          <box size="0.026 0.025 0.003"/>
         </geometry>
       </collision>
 
       <collision>
-        <origin xyz="0.049 0 -0.0145" rpy="${pi/2} 0 ${-pi/2}"/>
+        <origin xyz="0.013 0 -0.0225" rpy="0 0 0"/>
         <geometry>
-          <mesh filename="package://hexapod_description/meshes/F1.dae" scale="0.001 0.001 0.001"/>
+          <box size="0.026 0.025 0.003"/>
+        </geometry>
+      </collision>
+
+      <collision>
+        <origin xyz="0.0235 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.005 0.025 0.048"/>
+        </geometry>
+      </collision>
+
+      <!-- F1 simplified -->
+      <collision>
+        <origin xyz="0.0375 0.0225 -0.001" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.023 0.003 0.027"/>
+        </geometry>
+      </collision>
+
+      <collision>
+        <origin xyz="0.0375 -0.0225 -0.001" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.023 0.003 0.027"/>
+        </geometry>
+      </collision>
+
+      <collision>
+        <origin xyz="0.0285 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.005 0.048 0.025"/>
         </geometry>
       </collision>
 
@@ -86,9 +116,9 @@
         <origin xyz="0.026 0 0" rpy="0 0 0"/>
         <mass value="${2*LINKAGE_m}"/>
         <inertia
-          ixx="1.0" ixy="0.0" ixz="0.0"
-          iyy="1.0" iyz="0.0"
-          izz="1.0"/>
+          ixx="1.0e-6" ixy="0.0" ixz="0.0"
+          iyy="1.0e-6" iyz="0.0"
+          izz="1.0e-6"/>
       </inertial>
 
     </link>
@@ -162,9 +192,9 @@
         <origin xyz="0.04275 0 -0.01125" rpy="0 0 0"/>
         <mass value="${2*AX12_m + 2*LINKAGE_m}"/>
         <inertia
-          ixx="1.0" ixy="0.0" ixz="0.0"
-          iyy="1.0" iyz="0.0"
-          izz="1.0"/>
+          ixx="1.0e-6" ixy="0.0" ixz="0.0"
+          iyy="1.0e-6" iyz="0.0"
+          izz="1.0e-6"/>
       </inertial>
 
     </link>
@@ -210,9 +240,9 @@
         <origin xyz="0 0 -0.05" rpy="0 0 0"/>
         <mass value="${2*LINKAGE_m}"/>
         <inertia
-          ixx="1.0" ixy="0.0" ixz="0.0"
-          iyy="1.0" iyz="0.0"
-          izz="1.0"/>
+          ixx="1.0e-6" ixy="0.0" ixz="0.0"
+          iyy="1.0e-6" iyz="0.0"
+          izz="1.0e-6"/>
       </inertial>
 
     </link>

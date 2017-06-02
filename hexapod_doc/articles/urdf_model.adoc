@@ -1,0 +1,36 @@
+= Tetrapod URDF model
+
+
+== Tetrapod body
+
+The URDF model of the complete tetrapod is written as a link:https://nedbatchelder.com/code/cog/[cog] template to be filled by a script (which also generates the body plate STL meshes), link:../../hexapod_description/scad/generate.py[`generate.py`]. Most of the model is handcrafted in link:../../hexapod_description/scad/body.cog.urdf.xacro[`body.cog.urdf.xacro`]. Here, `generate.py` only fills a few variables, used to position the leg joints in the appropriate configuration for the generated body plates.
+
+
+== Leg models
+
+=== Kinematics
+
+See link:leg_kinematics.md[`leg_kinematics.md`].
+
+=== Visuals
+
+The visual model for each leg contains STL meshes for the Robotis parts, which can be found link:http://en.robotis.com/BlueAD/board.php?bbs_id=downloads&mode=view&bbs_no=26324&page=1&key=&keyword=&sort=&scate=DRAWING[digging around] in the Robotis support site.
+
+
+[WARNING]
+====
+At this point it would be nice to note that it is a bad idea to be careless with the geometry and inertial elements if the model will go anywhere near gazebo.
+
+The first naïve approach cut corners in both places by:
+
+1. building the collision model using the same complex STL meshes used for the visual model
+2. not caring even a bit for the inertial parameters of the links and assigning an identity inertia matrixfootnote:[TODO: Roughly equivalent to blah, blah...] to every link, because why not
+
+This is what you get:
+
+TODO: image of the gazebo simulation.
+====
+
+TODO: How to simplify the collision model
+
+TODO: Using reasonble values in the inertial model
