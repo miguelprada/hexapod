@@ -6,12 +6,12 @@
 
   <link name="base_link"/>
 
-  <joint name="test_body_base_joint" type="fixed">
+  <joint name="body_joint" type="fixed">
     <parent link="base_link"/>
-    <child link="test_body_base_link"/>
+    <child link="body_link"/>
   </joint>
 
-  <link name="test_body_base_link">
+  <link name="body_link">
 
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
@@ -88,9 +88,9 @@
 
   </link>
 
-  <joint name="test_body_fr_leg_joint" type="fixed">
-    <parent link="test_body_base_link"/>
-    <child link="test_body_fr_leg_base_link"/>
+  <joint name="fr_leg_joint" type="fixed">
+    <parent link="body_link"/>
+    <child link="fr_leg_base_link"/>
     <!--[[[cog
     import cog
 
@@ -99,11 +99,11 @@
     <!--[[[end]]]-->
   </joint>
 
-  <xacro:leg name="test_body_fr"/>
+  <xacro:leg name="fr"/>
 
-  <joint name="test_body_rr_leg_joint" type="fixed">
-    <parent link="test_body_base_link"/>
-    <child link="test_body_rr_leg_base_link"/>
+  <joint name="rr_leg_joint" type="fixed">
+    <parent link="body_link"/>
+    <child link="rr_leg_base_link"/>
     <!--[[[cog
     import cog
 
@@ -112,11 +112,11 @@
     <!--[[[end]]]-->
   </joint>
 
-  <xacro:leg name="test_body_rr"/>
+  <xacro:leg name="rr"/>
 
-  <joint name="test_body_rl_leg_joint" type="fixed">
-    <parent link="test_body_base_link"/>
-    <child link="test_body_rl_leg_base_link"/>
+  <joint name="rl_leg_joint" type="fixed">
+    <parent link="body_link"/>
+    <child link="rl_leg_base_link"/>
     <!--[[[cog
     import cog
 
@@ -125,11 +125,11 @@
     <!--[[[end]]]-->
   </joint>
 
-  <xacro:leg name="test_body_rl"/>
+  <xacro:leg name="rl"/>
 
-  <joint name="test_body_fl_leg_joint" type="fixed">
-    <parent link="test_body_base_link"/>
-    <child link="test_body_fl_leg_base_link"/>
+  <joint name="fl_leg_joint" type="fixed">
+    <parent link="body_link"/>
+    <child link="fl_leg_base_link"/>
     <!--[[[cog
     import cog
 
@@ -138,6 +138,6 @@
     <!--[[[end]]]-->
   </joint>
 
-  <xacro:leg name="test_body_fl"/>
+  <xacro:leg name="fl"/>
 
 </robot>
