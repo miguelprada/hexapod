@@ -11,7 +11,7 @@ import numpy as np
 from math import pi
 
 
-DEFAULT_OUTFILE = '/tmp/hxpd'
+DEFAULT_OUTFILE = os.path.expanduser( '~/.ros/hexapod_description' )
 
 
 class Logger:
@@ -56,9 +56,9 @@ def make_temp_dir( logger, prefix ):
 
 def generate_scad( logger, data, name, temp_prefix ):
 
-    scad_filename = '{0}/body_{1}.scad'.format( temp_prefix, name )
+    scad_filepath = '{0}/body.scad'.format( temp_prefix )
 
-    logger.info( 'Generating: {0}'.format( scad_filename ) )
+    logger.info( 'Generating: {0}'.format( scad_filepath ) )
 
     scad_generation_command = ['cog.py',
                                '-D', 'PI_L={0}'.format(data[name]['pi_l']),
@@ -73,46 +73,50 @@ def generate_scad( logger, data, name, temp_prefix ):
                                '-D', 'H={0}'.format(data[name]['h']),
                                'body.cog.scad' ]
 
-    logger.debug( 'Running: {0} > {1}'.format( ' '.join( scad_generation_command ), scad_filename ) )
+    logger.debug( 'Running: {0} > {1}'.format( ' '.join( scad_generation_command ), scad_filepath ) )
 
-    scad_file = open( scad_filename, 'w' )
+    scad_file = open( scad_filepath, 'w' )
     subprocess.call( scad_generation_command, stdout=scad_file )
 
-    return scad_filename
+    return scad_filepath
 
 
 
-def generate_ascii_stl( logger, name, temp_prefix, scad_filename ):
+def generate_ascii_stl( logger, name, temp_prefix, scad_filepath ):
 
-    ascii_stl_filename = '{0}/body_{1}.stl'.format( temp_prefix, name )
+    ascii_stl_filepath = '{0}/body.stl'.format( temp_prefix, name )
 
-    logger.info( 'Generating: {0}'.format( ascii_stl_filename ) )
+    logger.info( 'Generating: {0}'.format( ascii_stl_filepath ) )
 
     ascii_stl_generation_command = [ 'openscad',
-                                     '-o', ascii_stl_filename,
-                                     scad_filename]
-                         
+                                     '-o', ascii_stl_filepath,
+                                     scad_filepath]
+
     logger.debug( 'Running: {0}'.format( ' '.join( ascii_stl_generation_command ) ) )
 
     subprocess.call( ascii_stl_generation_command )
 
-    return ascii_stl_filename
+    return ascii_stl_filepath
 
 
 
-def convert_ascii_to_binary_stl( logger, ascii_stl_filename ):
+def convert_ascii_to_binary_stl( logger, ascii_stl_filepath ):
+
+    ascii_stl_filename = ascii_stl_filepath.split('/')[-1]
 
     binary_stl_filename = '-binary.'.join( ascii_stl_filename.split('.') )
 
-    logger.info( 'Generating: {0}'.format( binary_stl_filename ) )
+    binary_stl_filepath = '/'.join( ascii_stl_filepath.split('/')[:-1] + [binary_stl_filename] )
 
-    binary_stl_generation_command = [ 'ruby', 'convertSTL.rb', ascii_stl_filename ]
+    logger.info( 'Generating: {0}'.format( binary_stl_filepath ) )
+
+    binary_stl_generation_command = [ 'ruby', 'convertSTL.rb', ascii_stl_filepath ]
 
     logger.debug( 'Running: {0}'.format( binary_stl_generation_command ) )
 
     subprocess.call( binary_stl_generation_command )
 
-    return binary_stl_filename
+    return binary_stl_filepath
 
 
 
@@ -152,11 +156,11 @@ def compute_leg_transform( logger, v1, v2, d_in, h ):
 
 
 
-def generate_urdf( logger, data, name, temp_prefix, binary_stl_filename ):
+def generate_urdf( logger, data, name, temp_prefix, binary_stl_filepath ):
 
-    xacro_filename = '{0}/body_{1}.urdf.xacro'.format( temp_prefix, name )
+    xacro_filepath = '{0}/body.urdf.xacro'.format( temp_prefix, name )
 
-    logger.info( 'Generating: {0}'.format( xacro_filename ) )
+    logger.info( 'Generating: {0}'.format( xacro_filepath ) )
 
     vertices = []
 
@@ -175,7 +179,7 @@ def generate_urdf( logger, data, name, temp_prefix, binary_stl_filename ):
     leg_fl_pos, leg_fl_rot = compute_leg_transform( logger, vertices[6], vertices[7], data[name]['d_in'], data[name]['h'] )
 
     xacro_generation_command = ['cog.py',
-                                '-D', 'FILENAME={0}'.format( binary_stl_filename ),
+                                '-D', 'FILENAME={0}'.format( binary_stl_filepath ),
                                 '-D', 'LEG_FR_POS="{0} {1} {2}"'.format( leg_fr_pos[0], leg_fr_pos[1], leg_fr_pos[2] ),
                                 '-D', 'LEG_FR_ROT="{0} {1} {2}"'.format( leg_fr_rot[0], leg_fr_rot[1], leg_fr_rot[2] ),
                                 '-D', 'LEG_RR_POS="{0} {1} {2}"'.format( leg_rr_pos[0], leg_rr_pos[1], leg_rr_pos[2] ),
@@ -187,30 +191,30 @@ def generate_urdf( logger, data, name, temp_prefix, binary_stl_filename ):
                                 '-D', 'H={0}'.format( data[name]['h'] ),
                                 'body.cog.urdf.xacro' ]
 
-    logger.debug( 'Running: {0} > {1}'.format( ' '.join( xacro_generation_command ), xacro_filename ) )
+    logger.debug( 'Running: {0} > {1}'.format( ' '.join( xacro_generation_command ), xacro_filepath ) )
 
-    xacro_file = open( xacro_filename, 'w' )
+    xacro_file = open( xacro_filepath, 'w' )
     subprocess.call( xacro_generation_command, stdout=xacro_file )
 
 
-    urdf_filename = '{0}/body_{1}.urdf'.format( temp_prefix, name )
+    urdf_filepath = '{0}/body.urdf'.format( temp_prefix, name )
 
-    logger.info( 'Generating: {0}'.format( urdf_filename ) )
+    logger.info( 'Generating: {0}'.format( urdf_filepath ) )
 
-    urdf_generation_command = ['rosrun', 'xacro', 'xacro', xacro_filename]
+    urdf_generation_command = ['rosrun', 'xacro', 'xacro', xacro_filepath]
 
-    logger.debug( 'Running: {0} > {1}'.format( ' '.join( urdf_generation_command ), urdf_filename ) )
+    logger.debug( 'Running: {0} > {1}'.format( ' '.join( urdf_generation_command ), urdf_filepath ) )
 
-    urdf_file = open( urdf_filename, 'w' )
+    urdf_file = open( urdf_filepath, 'w' )
     subprocess.call( urdf_generation_command, stdout=urdf_file )
 
-    return urdf_filename
+    return urdf_filepath
 
 
 
-def visualize_in_rviz( logger, urdf_filename ):
+def visualize_in_rviz( logger, urdf_filepath ):
 
-    display_command = [ 'roslaunch', 'hexapod_description', 'gen_xacrodisplay.launch', 'model:={0}'.format( urdf_filename ) ]
+    display_command = [ 'roslaunch', 'hexapod_description', 'gen_xacrodisplay.launch', 'model:={0}'.format( urdf_filepath ) ]
 
     logger.debug( 'Running: {0}'.format( display_command ) )
 
@@ -222,26 +226,24 @@ def process_dimension_set( logger, data, name, temp_prefix, visualize ):
 
     logger.info( '------------------------------------------------------' )
     logger.info( 'Processing dimension set: {0}'.format( name ) )
-    
-    scad_filename = generate_scad( logger, data, name, temp_prefix )  
 
-    ascii_stl_filename = generate_ascii_stl( logger, name, temp_prefix, scad_filename )
+    scad_filepath = generate_scad( logger, data, name, temp_prefix )
 
-    binary_stl_filename = convert_ascii_to_binary_stl( logger, ascii_stl_filename )
+    ascii_stl_filepath = generate_ascii_stl( logger, name, temp_prefix, scad_filepath )
 
-    urdf_filename = generate_urdf( logger, data, name, temp_prefix, binary_stl_filename )
+    binary_stl_filepath = convert_ascii_to_binary_stl( logger, ascii_stl_filepath )
+
+    urdf_filepath = generate_urdf( logger, data, name, temp_prefix, binary_stl_filepath )
 
     if visualize:
 
-        visualize_in_rviz( logger, urdf_filename )
+        visualize_in_rviz( logger, urdf_filepath )
 
 
 
 def main( datafile, outdir, verbose, display, names ):
 
     logger = Logger( print_debug = args.verbose>=1, print_ddebug = args.verbose>=2 )
-
-    make_temp_dir( logger, outdir )
 
     data = yaml.load( open( datafile ) )
 
@@ -250,8 +252,12 @@ def main( datafile, outdir, verbose, display, names ):
         if names and (name not in names):
             continue
 
-        process_dimension_set( logger, data, name, outdir, display )
-  
+        namedir = outdir + '/' + name
+
+        make_temp_dir( logger, namedir )
+
+        process_dimension_set( logger, data, name, namedir, display )
+
 
 
 if __name__ == '__main__':
