@@ -158,7 +158,7 @@ def compute_leg_transform( logger, v1, v2, d_in, h ):
 
 def generate_urdf( logger, data, name, temp_prefix, binary_stl_filepath ):
 
-    xacro_filepath = '{0}/body.urdf.xacro'.format( temp_prefix, name )
+    xacro_filepath = '{0}/tetrapod.urdf.xacro'.format( temp_prefix, name )
 
     logger.info( 'Generating: {0}'.format( xacro_filepath ) )
 
@@ -189,7 +189,7 @@ def generate_urdf( logger, data, name, temp_prefix, binary_stl_filepath ):
                                 '-D', 'LEG_FL_POS="{0} {1} {2}"'.format( leg_fl_pos[0], leg_fl_pos[1], leg_fl_pos[2] ),
                                 '-D', 'LEG_FL_ROT="{0} {1} {2}"'.format( leg_fl_rot[0], leg_fl_rot[1], leg_fl_rot[2] ),
                                 '-D', 'H={0}'.format( data[name]['h'] ),
-                                'body.cog.urdf.xacro' ]
+                                'tetrapod.cog.urdf.xacro' ]
 
     logger.debug( 'Running: {0} > {1}'.format( ' '.join( xacro_generation_command ), xacro_filepath ) )
 
@@ -197,7 +197,7 @@ def generate_urdf( logger, data, name, temp_prefix, binary_stl_filepath ):
     subprocess.call( xacro_generation_command, stdout=xacro_file )
 
 
-    urdf_filepath = '{0}/body.urdf'.format( temp_prefix, name )
+    urdf_filepath = '{0}/tetrapod.urdf'.format( temp_prefix, name )
 
     logger.info( 'Generating: {0}'.format( urdf_filepath ) )
 
