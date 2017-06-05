@@ -1,0 +1,33 @@
+test:
+  pi_l: 85
+  pi_w: 56
+  b_l: 150
+  b_lp: 80
+  b_w: 120
+  b_wp: 60
+  h: 5
+  d_in: 2
+  pi_hr: 1.375
+  s_hr: 1
+test2:
+  pi_l: 85
+  pi_w: 56
+  b_l: 150
+  b_lp: 140
+  b_w: 120
+  b_wp: 60
+  h: 5
+  d_in: 2
+  pi_hr: 1.375
+  s_hr: 1
+test3:
+  pi_l: 85
+  pi_w: 56
+  b_l: 150
+  b_lp: 80
+  b_w: 120
+  b_wp: 110
+  h: 5
+  d_in: 2
+  pi_hr: 1.375
+  s_hr: 1
