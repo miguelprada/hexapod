@@ -4,140 +4,144 @@
 
   <xacro:include filename="$(find hexapod_description)/model/leg.urdf.xacro"/>
 
-  <link name="base_link"/>
+  <xacro:macro name="tetrapod">
 
-  <joint name="body_joint" type="fixed">
-    <parent link="base_link"/>
-    <child link="body_link"/>
-  </joint>
+    <link name="base_link"/>
 
-  <link name="body_link">
+    <joint name="body_joint" type="fixed">
+      <parent link="base_link"/>
+      <child link="body_link"/>
+    </joint>
 
-    <visual>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
+    <link name="body_link">
+
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <!--[[[cog
+          import cog
+
+          cog.outl('<mesh filename="file://{0}" scale="0.001 0.001 0.001"/>'.format(FILENAME))
+          ]]]-->
+          <!--[[[end]]]-->
+        </geometry>
+        <material name="gray">
+          <color rgba="0.7 0.7 0.7 1"/>
+        </material>
+      </visual>
+
+      <visual>
         <!--[[[cog
         import cog
 
-        cog.outl('<mesh filename="file://{0}" scale="0.001 0.001 0.001"/>'.format(FILENAME))
+        cog.outl('<origin xyz="0 0 {0}" rpy="0 0 0"/>'.format( (float(H)+32)/1000.0 ))
         ]]]-->
         <!--[[[end]]]-->
-      </geometry>
-      <material name="gray">
-        <color rgba="0.7 0.7 0.7 1"/>
-      </material>
-    </visual>
+        <geometry>
+          <!--[[[cog
+          import cog
 
-    <visual>
+          cog.outl('<mesh filename="file://{0}" scale="0.001 0.001 0.001"/>'.format(FILENAME))
+          ]]]-->
+          <!--[[[end]]]-->
+        </geometry>
+        <material name="gray">
+          <color rgba="0.7 0.7 0.7 1"/>
+        </material>
+      </visual>
+
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <!--[[[cog
+          import cog
+
+          cog.outl('<mesh filename="file://{0}" scale="0.001 0.001 0.001"/>'.format(FILENAME))
+          ]]]-->
+          <!--[[[end]]]-->
+        </geometry>
+      </collision>
+
+      <collision>
+        <!--[[[cog
+        import cog
+
+        cog.outl('<origin xyz="0 0 {0}" rpy="0 0 0"/>'.format( (float(H)+32)/1000.0 ))
+        ]]]-->
+        <!--[[[end]]]-->
+        <geometry>
+          <!--[[[cog
+          import cog
+
+          cog.outl('<mesh filename="file://{0}" scale="0.001 0.001 0.001"/>'.format(FILENAME))
+          ]]]-->
+          <!--[[[end]]]-->
+        </geometry>
+      </collision>
+
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="0.1"/>
+        <inertia
+          ixx="1.0" ixy="0.0" ixz="0.0"
+          iyy="1.0" iyz="0.0"
+          izz="1.0"/>
+      </inertial>
+
+    </link>
+
+    <joint name="fr_leg_joint" type="fixed">
+      <parent link="body_link"/>
+      <child link="fr_leg_base_link"/>
       <!--[[[cog
       import cog
 
-      cog.outl('<origin xyz="0 0 {0}" rpy="0 0 0"/>'.format( (float(H)+32)/1000.0 ))
+      cog.outl('<origin xyz={0} rpy={1}/>'.format(LEG_FR_POS, LEG_FR_ROT))
       ]]]-->
       <!--[[[end]]]-->
-      <geometry>
-        <!--[[[cog
-        import cog
+    </joint>
 
-        cog.outl('<mesh filename="file://{0}" scale="0.001 0.001 0.001"/>'.format(FILENAME))
-        ]]]-->
-        <!--[[[end]]]-->
-      </geometry>
-      <material name="gray">
-        <color rgba="0.7 0.7 0.7 1"/>
-      </material>
-    </visual>
+    <xacro:leg name="fr"/>
 
-    <collision>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <!--[[[cog
-        import cog
-
-        cog.outl('<mesh filename="file://{0}" scale="0.001 0.001 0.001"/>'.format(FILENAME))
-        ]]]-->
-        <!--[[[end]]]-->
-      </geometry>
-    </collision>
-
-    <collision>
+    <joint name="rr_leg_joint" type="fixed">
+      <parent link="body_link"/>
+      <child link="rr_leg_base_link"/>
       <!--[[[cog
       import cog
 
-      cog.outl('<origin xyz="0 0 {0}" rpy="0 0 0"/>'.format( (float(H)+32)/1000.0 ))
+      cog.outl('<origin xyz={0} rpy={1}/>'.format(LEG_RR_POS, LEG_RR_ROT))
       ]]]-->
       <!--[[[end]]]-->
-      <geometry>
-        <!--[[[cog
-        import cog
+    </joint>
 
-        cog.outl('<mesh filename="file://{0}" scale="0.001 0.001 0.001"/>'.format(FILENAME))
-        ]]]-->
-        <!--[[[end]]]-->
-      </geometry>
-    </collision>
+    <xacro:leg name="rr"/>
 
-    <inertial>
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <mass value="0.1"/>
-      <inertia
-        ixx="1.0" ixy="0.0" ixz="0.0"
-        iyy="1.0" iyz="0.0"
-        izz="1.0"/>
-    </inertial>
+    <joint name="rl_leg_joint" type="fixed">
+      <parent link="body_link"/>
+      <child link="rl_leg_base_link"/>
+      <!--[[[cog
+      import cog
 
-  </link>
+      cog.outl('<origin xyz={0} rpy={1}/>'.format(LEG_RL_POS, LEG_RL_ROT))
+      ]]]-->
+      <!--[[[end]]]-->
+    </joint>
 
-  <joint name="fr_leg_joint" type="fixed">
-    <parent link="body_link"/>
-    <child link="fr_leg_base_link"/>
-    <!--[[[cog
-    import cog
+    <xacro:leg name="rl"/>
 
-    cog.outl('<origin xyz={0} rpy={1}/>'.format(LEG_FR_POS, LEG_FR_ROT))
-    ]]]-->
-    <!--[[[end]]]-->
-  </joint>
+    <joint name="fl_leg_joint" type="fixed">
+      <parent link="body_link"/>
+      <child link="fl_leg_base_link"/>
+      <!--[[[cog
+      import cog
 
-  <xacro:leg name="fr"/>
+      cog.outl('<origin xyz={0} rpy={1}/>'.format(LEG_FL_POS, LEG_FL_ROT))
+      ]]]-->
+      <!--[[[end]]]-->
+    </joint>
 
-  <joint name="rr_leg_joint" type="fixed">
-    <parent link="body_link"/>
-    <child link="rr_leg_base_link"/>
-    <!--[[[cog
-    import cog
+    <xacro:leg name="fl"/>
 
-    cog.outl('<origin xyz={0} rpy={1}/>'.format(LEG_RR_POS, LEG_RR_ROT))
-    ]]]-->
-    <!--[[[end]]]-->
-  </joint>
-
-  <xacro:leg name="rr"/>
-
-  <joint name="rl_leg_joint" type="fixed">
-    <parent link="body_link"/>
-    <child link="rl_leg_base_link"/>
-    <!--[[[cog
-    import cog
-
-    cog.outl('<origin xyz={0} rpy={1}/>'.format(LEG_RL_POS, LEG_RL_ROT))
-    ]]]-->
-    <!--[[[end]]]-->
-  </joint>
-
-  <xacro:leg name="rl"/>
-
-  <joint name="fl_leg_joint" type="fixed">
-    <parent link="body_link"/>
-    <child link="fl_leg_base_link"/>
-    <!--[[[cog
-    import cog
-
-    cog.outl('<origin xyz={0} rpy={1}/>'.format(LEG_FL_POS, LEG_FL_ROT))
-    ]]]-->
-    <!--[[[end]]]-->
-  </joint>
-
-  <xacro:leg name="fl"/>
+  </xacro:macro>
 
 </robot>

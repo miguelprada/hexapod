@@ -7,7 +7,7 @@
     <arg name="world_name" value="$(find hexapod_gazebo)/worlds/hexapod.world"/>
   </include>
 
-  <param name="robot_description" command="$(find xacro)/xacro.py $(env HOME)/.ros/hexapod_description/$(arg name)/tetrapod.urdf.xacro"/>
+  <param name="robot_description" command="$(find xacro)/xacro.py $(find hexapod_description)/model/gen_tetrapod.urdf.xacro model_path:=$(env HOME)/.ros/hexapod_description/$(arg name)"/>
 
   <node name="spawn_hexapod" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model tetrapod"/>
 

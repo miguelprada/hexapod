@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="body_test">
+
+  <xacro:include filename="$(arg model_path)/tetrapod.urdf.xacro"/>
+
+  <xacro:tetrapod/>
+
+</robot>
