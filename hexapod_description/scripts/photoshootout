@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+
+import os
+import random
+import subprocess
+import yaml
+
+FNULL = open( os.devnull, 'w' )
+
+DIMENSIONS_TMPFILE = '/tmp/dimensions.yaml'
+
+mosaic_width = 10
+mosaic_image_width = 200
+
+for i in range(mosaic_width*mosaic_width):
+
+    dimensions = { 'test': {
+        'pi_l': 85,
+        'pi_w': 56,
+        'h': 5,
+        'd_in': 2,
+        'pi_hr': 1.375,
+        's_hr': 1
+    } }
+
+    dimensions['test']['b_l'] = random.uniform( 100, 150 )
+    dimensions['test']['b_lp'] = random.uniform( 100, dimensions['test']['b_l'] )
+    dimensions['test']['b_w'] = random.uniform( 70, 120 )
+    dimensions['test']['b_wp'] = random.uniform( 70, dimensions['test']['b_w'] )
+
+    with open( DIMENSIONS_TMPFILE, 'w' ) as dimensions_tmpfile:
+        dimensions_tmpfile.write( yaml.dump( dimensions ) )
+
+    gencmd = ['rosrun', 'hexapod_description', 'generate.py', DIMENSIONS_TMPFILE]
+    subprocess.call( gencmd, cwd='/home/mprada/ros/indigo/hexapod/src/hexapod/hexapod_description/scad' )
+
+    cmd = ['roslaunch', 'hexapod_description', 'photobooth.launch', 'name:=test', 'pic_prefix:=hex_{0:05d}'.format(i)]
+    subprocess.call( cmd )
+
+mosaic_cmd = ['montage', '-resize', '{0}x{0}'.format(mosaic_image_width), '-tile', '{0}x{0}'.format(mosaic_width), '-border', '0', '-geometry', '{0}x{0}'.format(mosaic_width*mosaic_image_width), 'hex_*.png', 'mosaic.png']
+subprocess.call( mosaic_cmd, cwd='/home/mprada/.ros' )

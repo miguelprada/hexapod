@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+
+import rospy
+
+from rosgraph_msgs.msg import Clock
+from std_srvs.srv import Empty
+
+import time
+
+rospy.init_node( 'auto_trigger' )
+
+startup_timeout = 5.0
+trigger_timeout = 300.0
+shutdown_timeout = 5.0
+
+rospy.loginfo( 'Waiting for {0} seconds for the spawning processes to run'.format( startup_timeout ) )
+time.sleep( startup_timeout )
+
+rospy.loginfo( 'Waiting for clock messages' )
+try:
+    rospy.wait_for_message( '/clock', Clock, trigger_timeout )
+except rospy.ROSException as e:
+    rospy.logerr( 'Did not receive clock for {0} seconds. Shutting down.'.format( trigger_timeout ) )
+    exit(1)
+
+rospy.loginfo( 'Triggering!' )
+trigger = rospy.ServiceProxy( '/image_saver/save', Empty )
+trigger()
+
+rospy.loginfo( 'Waiting for {0} seconds before ending'.format( shutdown_timeout ) )
+time.sleep( shutdown_timeout )
