@@ -47,7 +47,7 @@ class Logger:
 def make_temp_dir( logger, prefix ):
 
     try:
-        os.mkdir( prefix )
+        os.makedirs( prefix )
         logger.info( 'Creating directory {0}'.format( prefix ) )
     except OSError as e:
         logger.info( 'Not creating any directory, {0} already exists'.format( prefix ) )
