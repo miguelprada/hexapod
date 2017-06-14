@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+
+  <rosparam file="$(find hexapod_hw)/config/tetrapod_hw.yaml"/>
+
+  <node pkg="dynamixel_control_hw" type="dynamixel_control_hw" name="tetrapod_control_hw" output="screen"/>
+
+</launch>
