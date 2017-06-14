@@ -1,13 +1,13 @@
 <launch>
 
-  <arg name="name"/>
+  <arg name="headless"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <env name="LC_NUMERIC" value="C"/> <!-- See http://answers.ros.org/question/199401/problem-with-indigo-and-gazebo-22/ -->
     <arg name="world_name" value="$(find hexapod_gazebo)/worlds/hexapod.world"/>
+    <arg if="$(arg headless)" name="gui" value="False"/>
+    <arg unless="$(arg headless)" name="gui" value="True"/>
   </include>
-
-  <param name="robot_description" command="$(find xacro)/xacro.py $(find hexapod_description)/model/gen_tetrapod.urdf.xacro model_path:=$(env HOME)/.ros/hexapod_description/$(arg name)"/>
 
   <node name="spawn_hexapod" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model tetrapod"/>
 

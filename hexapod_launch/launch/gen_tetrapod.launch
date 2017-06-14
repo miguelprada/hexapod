@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <arg name="name"/>
+  <arg name="use_sim" default="True"/>
+  <arg name="headless" default="True"/>
+
+  <include if="$(arg use_sim)" file="$(find hexapod_gazebo)/launch/gen_tetrapod_sim.launch">
+    <arg name="headless" value="$(arg headless)"/>
+  </include>
+
+  <include unless="$(arg use_sim)" file="$(find hexapod_hw)/launch/tetrapod_hw.launch"/>
+
+  <include file="$(find hexapod_description)/launch/upload_gen_tetrapod.launch">
+    <arg name="name" value="$(arg name)"/>
+  </include>
+
+  <include file="$(find hexapod_control)/launch/tetrapod_controllers.launch"/>
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+
+</launch>

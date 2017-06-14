@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+  <arg name="name"/>
+
+  <param name="robot_description" command="$(find xacro)/xacro.py $(find hexapod_description)/model/gen_tetrapod.urdf.xacro model_path:=$(env HOME)/.ros/hexapod_description/$(arg name)"/>
+
+</launch>

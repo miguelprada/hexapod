@@ -223,7 +223,10 @@ def generate_urdf( logger, data, name, temp_prefix, binary_stl_filepath ):
 
 def visualize_in_rviz( logger, urdf_filepath ):
 
-    display_command = [ 'roslaunch', 'hexapod_description', 'gen_xacrodisplay.launch', 'model:={0}'.format( urdf_filepath ) ]
+    logger.info( 'Visualization of the generated model has been broken by recent changes.' )
+    return
+
+    display_command = [ 'roslaunch', 'urdf_tutorial', 'gen_xacrodisplay.launch', 'model:={0}'.format( urdf_filepath ) ]
 
     logger.debug( 'Running: {0}'.format( display_command ) )
 

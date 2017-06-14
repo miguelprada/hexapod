@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <package format="2">
 
-  <name>hexapod_description</name>
+  <name>hexapod_control</name>
   <version>0.0.0</version>
-  <description>The hexapod_description package</description>
+  <description>The hexapod_control package</description>
 
   <maintainer email="miguel.prada.sarasola@gmail.com">Miguel Prada</maintainer>
 

@@ -6,4 +6,6 @@
 
   <xacro:tetrapod/>
 
+  <xacro:include filename="$(find hexapod_description)/model/common.gazebo.xacro"/>
+
 </robot>
