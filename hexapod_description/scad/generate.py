@@ -60,6 +60,9 @@ def generate_scad( logger, data, name, temp_prefix ):
 
     logger.info( 'Generating: {0}'.format( scad_filepath ) )
 
+    import rospkg
+    rospack = rospkg.RosPack()
+
     scad_generation_command = ['cog.py',
                                '-D', 'PI_L={0}'.format(data[name]['pi_l']),
                                '-D', 'PI_W={0}'.format(data[name]['pi_w']),
@@ -71,7 +74,7 @@ def generate_scad( logger, data, name, temp_prefix ):
                                '-D', 'D_IN={0}'.format(data[name]['d_in']),
                                '-D', 'S_HR={0}'.format(data[name]['s_hr']),
                                '-D', 'H={0}'.format(data[name]['h']),
-                               'body.cog.scad' ]
+                               '{0}/scad/body.cog.scad'.format( rospack.get_path( 'hexapod_description' ) ) ]
 
     logger.debug( 'Running: {0} > {1}'.format( ' '.join( scad_generation_command ), scad_filepath ) )
 
@@ -110,7 +113,10 @@ def convert_ascii_to_binary_stl( logger, ascii_stl_filepath ):
 
     logger.info( 'Generating: {0}'.format( binary_stl_filepath ) )
 
-    binary_stl_generation_command = [ 'ruby', 'convertSTL.rb', ascii_stl_filepath ]
+    import rospkg
+    rospack = rospkg.RosPack()
+
+    binary_stl_generation_command = [ 'ruby', '{0}/scad/convertSTL.rb'.format( rospack.get_path( 'hexapod_description' ) ), ascii_stl_filepath ]
 
     logger.debug( 'Running: {0}'.format( binary_stl_generation_command ) )
 
@@ -178,6 +184,9 @@ def generate_urdf( logger, data, name, temp_prefix, binary_stl_filepath ):
     leg_rl_pos, leg_rl_rot = compute_leg_transform( logger, vertices[4], vertices[5], data[name]['d_in'], data[name]['h'] )
     leg_fl_pos, leg_fl_rot = compute_leg_transform( logger, vertices[6], vertices[7], data[name]['d_in'], data[name]['h'] )
 
+    import rospkg
+    rospack = rospkg.RosPack()
+
     xacro_generation_command = ['cog.py',
                                 '-D', 'FILENAME={0}'.format( binary_stl_filepath ),
                                 '-D', 'LEG_FR_POS="{0} {1} {2}"'.format( leg_fr_pos[0], leg_fr_pos[1], leg_fr_pos[2] ),
@@ -189,7 +198,7 @@ def generate_urdf( logger, data, name, temp_prefix, binary_stl_filepath ):
                                 '-D', 'LEG_FL_POS="{0} {1} {2}"'.format( leg_fl_pos[0], leg_fl_pos[1], leg_fl_pos[2] ),
                                 '-D', 'LEG_FL_ROT="{0} {1} {2}"'.format( leg_fl_rot[0], leg_fl_rot[1], leg_fl_rot[2] ),
                                 '-D', 'H={0}'.format( data[name]['h'] ),
-                                'tetrapod.cog.urdf.xacro' ]
+                                '{0}/scad/tetrapod.cog.urdf.xacro'.format( rospack.get_path( 'hexapod_description' ) ) ]
 
     logger.debug( 'Running: {0} > {1}'.format( ' '.join( xacro_generation_command ), xacro_filepath ) )
 
