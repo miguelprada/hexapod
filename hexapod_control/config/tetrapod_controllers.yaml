@@ -5,33 +5,80 @@ joint_state_controller:
 joint_trajectory_controller:
   type: position_controllers/JointTrajectoryController
   joints:
-     - fl_leg_joint_0
-     - fl_leg_joint_1
-     - fl_leg_joint_2
-     - fr_leg_joint_0
-     - fr_leg_joint_1
-     - fr_leg_joint_2
-     - rl_leg_joint_0
-     - rl_leg_joint_1
-     - rl_leg_joint_2
-     - rr_leg_joint_0
-     - rr_leg_joint_1
-     - rr_leg_joint_2
+    - fl_leg_joint_0
+    - fl_leg_joint_1
+    - fl_leg_joint_2
+    - fr_leg_joint_0
+    - fr_leg_joint_1
+    - fr_leg_joint_2
+    - rl_leg_joint_0
+    - rl_leg_joint_1
+    - rl_leg_joint_2
+    - rr_leg_joint_0
+    - rr_leg_joint_1
+    - rr_leg_joint_2
   constraints:
-      goal_time: 0.6
-      stopped_velocity_tolerance: 0.05
-      fl_leg_joint_0: {trajectory: 0.1, goal: 0.1}
-      fl_leg_joint_1: {trajectory: 0.1, goal: 0.1}
-      fl_leg_joint_2: {trajectory: 0.1, goal: 0.1}
-      fr_leg_joint_0: {trajectory: 0.1, goal: 0.1}
-      fr_leg_joint_1: {trajectory: 0.1, goal: 0.1}
-      fr_leg_joint_2: {trajectory: 0.1, goal: 0.1}
-      rl_leg_joint_0: {trajectory: 0.1, goal: 0.1}
-      rl_leg_joint_1: {trajectory: 0.1, goal: 0.1}
-      rl_leg_joint_2: {trajectory: 0.1, goal: 0.1}
-      rr_leg_joint_0: {trajectory: 0.1, goal: 0.1}
-      rr_leg_joint_1: {trajectory: 0.1, goal: 0.1}
-      rr_leg_joint_2: {trajectory: 0.1, goal: 0.1}
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    fl_leg_joint_0: {trajectory: 0.1, goal: 0.1}
+    fl_leg_joint_1: {trajectory: 0.1, goal: 0.1}
+    fl_leg_joint_2: {trajectory: 0.1, goal: 0.1}
+    fr_leg_joint_0: {trajectory: 0.1, goal: 0.1}
+    fr_leg_joint_1: {trajectory: 0.1, goal: 0.1}
+    fr_leg_joint_2: {trajectory: 0.1, goal: 0.1}
+    rl_leg_joint_0: {trajectory: 0.1, goal: 0.1}
+    rl_leg_joint_1: {trajectory: 0.1, goal: 0.1}
+    rl_leg_joint_2: {trajectory: 0.1, goal: 0.1}
+    rr_leg_joint_0: {trajectory: 0.1, goal: 0.1}
+    rr_leg_joint_1: {trajectory: 0.1, goal: 0.1}
+    rr_leg_joint_2: {trajectory: 0.1, goal: 0.1}
+  stop_trajectory_duration: 0.5
+  state_publish_rate:  25
+  action_monitor_rate: 10
+
+effort_joint_trajectory_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - fl_leg_joint_0
+    - fl_leg_joint_1
+    - fl_leg_joint_2
+    - fr_leg_joint_0
+    - fr_leg_joint_1
+    - fr_leg_joint_2
+    - rl_leg_joint_0
+    - rl_leg_joint_1
+    - rl_leg_joint_2
+    - rr_leg_joint_0
+    - rr_leg_joint_1
+    - rr_leg_joint_2
+  constraints:
+    goal_time: 0.6
+    stopped_velocity_tolerance: 0.05
+    fl_leg_joint_0: {trajectory: 0.1, goal: 0.1}
+    fl_leg_joint_1: {trajectory: 0.1, goal: 0.1}
+    fl_leg_joint_2: {trajectory: 0.1, goal: 0.1}
+    fr_leg_joint_0: {trajectory: 0.1, goal: 0.1}
+    fr_leg_joint_1: {trajectory: 0.1, goal: 0.1}
+    fr_leg_joint_2: {trajectory: 0.1, goal: 0.1}
+    rl_leg_joint_0: {trajectory: 0.1, goal: 0.1}
+    rl_leg_joint_1: {trajectory: 0.1, goal: 0.1}
+    rl_leg_joint_2: {trajectory: 0.1, goal: 0.1}
+    rr_leg_joint_0: {trajectory: 0.1, goal: 0.1}
+    rr_leg_joint_1: {trajectory: 0.1, goal: 0.1}
+    rr_leg_joint_2: {trajectory: 0.1, goal: 0.1}
+  gains:
+    fl_leg_joint_0: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    fl_leg_joint_1: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    fl_leg_joint_2: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    fr_leg_joint_0: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    fr_leg_joint_1: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    fr_leg_joint_2: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    rl_leg_joint_0: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    rl_leg_joint_1: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    rl_leg_joint_2: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    rr_leg_joint_0: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    rr_leg_joint_1: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
+    rr_leg_joint_2: {p: 0.7,  d: 0.01, i: 0, i_clamp: 1}
   stop_trajectory_duration: 0.5
   state_publish_rate:  25
   action_monitor_rate: 10
