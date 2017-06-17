@@ -3,10 +3,12 @@
 
   <arg name="name"/>
   <arg name="use_sim" default="True"/>
-  <arg name="headless" default="True"/>
+  <arg name="headless_sim" default="True"/>
+  <arg name="paused_sim" default="False"/>
 
   <include if="$(arg use_sim)" file="$(find hexapod_gazebo)/launch/gen_tetrapod_sim.launch">
-    <arg name="headless" value="$(arg headless)"/>
+    <arg name="headless" value="$(arg headless_sim)"/>
+    <arg name="paused" value="$(arg paused_sim)"/>
   </include>
 
   <include unless="$(arg use_sim)" file="$(find hexapod_hw)/launch/tetrapod_hw.launch"/>
