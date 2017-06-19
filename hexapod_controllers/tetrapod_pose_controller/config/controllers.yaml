@@ -1,0 +1,4 @@
+tetrapod_pose_controller:
+  type: tetrapod_pose_controller/TetrapodPoseController
+  root_name: root_link
+  tip_name: tip_link

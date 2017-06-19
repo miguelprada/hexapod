@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<package format="2">
+
+  <name>tetrapod_pose_controller</name>
+  <version>0.0.0</version>
+  <description>The tetrapod_pose_controller package</description>
+
+  <maintainer email="miguel.prada.sarasola@gmail.com">Miguel Prada</maintainer>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>cmake_modules</build_depend>
+  <build_depend>controller_interface</build_depend>
+  <build_depend>eigen</build_depend>
+  <build_depend>eigen_conversions</build_depend>
+  <build_depend>urdf</build_depend>
+  <build_depend>kdl_parser</build_depend>
+
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+    <controller_interface plugin="${prefix}/tetrapod_pose_controller_plugin.xml"/>
+  </export>
+
+</package>

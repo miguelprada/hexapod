@@ -1,0 +1,9 @@
+<library path="lib/libtetrapod_pose_controller">
+
+  <class name="tetrapod_pose_controller/TetrapodPoseController" type="tetrapod_pose_controller::TetrapodPoseController" base_class_type="controller_interface::ControllerBase">
+    <description>
+      TODO
+    </description>
+  </class>
+
+</library>
