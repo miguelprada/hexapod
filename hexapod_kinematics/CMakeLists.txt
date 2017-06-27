@@ -20,6 +20,7 @@ if( CATKIN_ENABLE_TESTING )
   )
 
   catkin_add_gtest( test_rr_kinematics test/test_rr_kinematics.cpp )
+  catkin_add_gtest( test_leg_kinematics test/test_leg_kinematics.cpp )
 
 endif()
 

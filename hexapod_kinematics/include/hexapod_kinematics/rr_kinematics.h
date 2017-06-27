@@ -1,7 +1,7 @@
 #ifndef HEXAPOD_KINEMATICS_RR_KINEMATICS_H
 #define HEXAPOD_KINEMATICS_RR_KINEMATICS_H
 
-#include <hexapod_kinematics/constants.h>
+#include <hexapod_kinematics/util.h>
 
 #include <Eigen/Core>
 
@@ -24,8 +24,6 @@ public:
   int posIk( const Eigen::Vector2d& tip_position, Eigen::Matrix2d& joint_config );
 
 private:
-
-  double angle_clamp( double val, double max_angle );
 
   double l1_;
   double l2_;
@@ -93,16 +91,6 @@ int RR::posIk( const Eigen::Vector2d& tip_position, Eigen::Matrix2d& joint_confi
   joint_configs(1,1) = angle_clamp(              -q2, PI );
 
   return Result::OK;
-
-}
-
-
-double RR::angle_clamp( double val, double max_angle )
-{
-
-  val = max_angle < val ? val - 2*PI : val;
-  val = val < max_angle-2*PI ? val + 2*PI : val;
-  return val;
 
 }
 
