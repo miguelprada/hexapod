@@ -210,7 +210,7 @@ def generate_urdf( logger, data, name, temp_prefix, binary_stl_filepath ):
 
     logger.info( 'Generating: {0}'.format( urdf_filepath ) )
 
-    urdf_generation_command = ['rosrun', 'xacro', 'xacro', xacro_filepath]
+    urdf_generation_command = ['rosrun', 'xacro', 'xacro', rospack.get_path( 'hexapod_description' )+'/model/gen_tetrapod.urdf.xacro', 'model_path:={0}'.format( '/'.join( xacro_filepath.split('/')[:-1] ) ) ]
 
     logger.debug( 'Running: {0} > {1}'.format( ' '.join( urdf_generation_command ), urdf_filepath ) )
 
